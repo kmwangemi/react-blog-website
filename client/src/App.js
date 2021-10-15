@@ -11,9 +11,11 @@ import Settings from "./pages/settings/Settings";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import SinglePost from "./components/singlePost/SinglePost";
+import { useContext } from "react";
+import { Context } from "./context/Context";
 
 const App = () => {
-   const user = false;
+   const { user } = useContext(Context);
    return (
       <Router>
          <TopBar />

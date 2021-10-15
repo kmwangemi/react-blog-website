@@ -1,46 +1,49 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useLocation } from 'react-router'
 import './singlePost.css'
 
 const SinglePost = () => {
+   const location = useLocation()
+   const path = location.pathname.split("/")[2];
+   const [post, setPost] = useState({});
+   useEffect(() => {
+      const getPost = async () => {
+         const res = await axios.get("/posts/" + path)
+         setPost(res.data.post)
+      }
+      getPost()
+   }, [path])
+
    return (
       <div className="singlePost">
          <div className="singlePostWrapper">
-            <img 
-               src="https://images.unsplash.com/photo-1632333891437-a3fec8ed6a80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=387&q=80" 
-               alt="" 
-               className="singlePostImg" 
-            />
+            {
+               post.photo && (
+                  <img 
+                     src={post.photo}
+                     alt="" 
+                     className="singlePostImg" 
+                  />
+               )
+            }
             <h1 className="singlePostTitle">
-               Lorem ipsum dolor sit amet.
+               {post.title}
                <div className="singlePostEdit">
                   <i className="singlePostIcon far fa-edit"></i>
                   <i className="singlePostIcon far fa-trash-alt"></i>
                </div>
             </h1>
             <div className="singlePostInfo">
-               <span className="singlePostAuthor">Author: <b>Safak</b> </span>
-               <span className="singlePostDate"> 1 hour ago </span>
+               <span className="singlePostAuthor">
+                  Author: 
+                  <Link to={`/?user=${post.username}`} className="link"><b>{post.username}</b></Link> 
+               </span>
+               <span className="singlePostDate">{new Date(post.createdAt).toDateString()}</span>
             </div>
             <p className="singlePostDesc">
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-               Sapiente, est? Rerum facere quidem in incidunt mollitia, 
-               rem voluptas velit quae eveniet ratione assumenda eius 
-               deserunt laborum unde fugit ducimus molestiae.
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-               Sapiente, est? Rerum facere quidem in incidunt mollitia, 
-               rem voluptas velit quae eveniet ratione assumenda eius 
-               deserunt laborum unde fugit ducimus molestiae.
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-               Sapiente, est? Rerum facere quidem in incidunt mollitia, 
-               rem voluptas velit quae eveniet ratione assumenda eius 
-               deserunt laborum unde fugit ducimus molestiae.
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-               Sapiente, est? Rerum facere quidem in incidunt mollitia, 
-               rem voluptas velit quae eveniet ratione assumenda eius 
-               deserunt laborum unde fugit ducimus molestiae.
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-               Sapiente, est? Rerum facere quidem in incidunt mollitia, 
-               rem voluptas velit quae eveniet ratione assumenda eius 
-               deserunt laborum unde fugit ducimus molestiae.
+               {post.desc}
             </p>
          </div>
       </div>
