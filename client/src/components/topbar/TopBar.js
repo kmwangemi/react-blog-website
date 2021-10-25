@@ -34,7 +34,7 @@ const TopBar = () => {
                <li className="topListItem">
                   {
                      user &&
-                     <Link className="link" onClick={handleLogout}>LOGOUT</Link>
+                     <Link to="/login" className="link" onClick={handleLogout}>LOGOUT</Link>
                   }
                </li>
             </ul>

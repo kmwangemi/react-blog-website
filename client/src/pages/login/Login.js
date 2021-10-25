@@ -9,7 +9,7 @@ const Login = () => {
    const passwordRef = useRef() 
    const { dispatch, isFetching } = useContext(Context)
 
-   const handleSubmit = async e => {
+   const handleSubmit = async (e) => {
       e.preventDefault()
       dispatch({ type:"LOGIN_START" })
       try {

@@ -9,8 +9,8 @@ const Register = () => {
    const [password, setPassword] = useState("")
    const [error, setError] = useState(false)
 
-   const handleSubmit = async e => {
-      e.preventDefault()
+   const handleSubmit = async (e) => {
+      e.preventDefault();
       setError(false);
       try {
          const res = await axios.post("/auth/register", {
